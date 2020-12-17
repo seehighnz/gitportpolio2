@@ -1,0 +1,104 @@
+body {
+    text-align: center;
+    background-image: url('background1.jpg');
+    padding:120px 20px;
+    border: 5px solid white;
+}
+
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: monospace;
+}
+
+header{
+    color: white;
+}
+#weight, #Distance{
+    margin:0 4px;
+    padding:5px;
+}
+.container, h1{
+    display: flex;
+    justify-content: center;
+    margin:19px;
+}
+
+.main{
+    background: transparent;
+    width: 90%;
+    height: 500px;
+    margin:30px auto;
+}
+
+.js-clock, .sessionList{
+    width: 100%;
+    margin:30px auto;
+    padding:15px;
+    position: relative;
+}
+
+.stopwatch{
+    padding:20px 0px;
+    text-align: center;
+}
+
+.stopwatch span {
+    display: inline-block;
+    font-size: 22px;
+    border-radius: 5px;
+    color: white;
+}
+.InputBtn{
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 2px solid #ff4800d7;
+    background-color: #353535;
+    color: #c85454;
+}
+.stopwatch-btn {
+    margin-top: 5px;
+    margin-left: 5px;
+    border: none;
+    padding: 13px 20px;
+    cursor: pointer;
+    border: 2px solid #ff4800d7;
+    background-color: #353535;
+    color: #c85454;
+}
+
+.button2{
+    background-color:black;
+    cursor: pointer;
+    position: relative;
+}
+
+nav ul li .button1{
+    border: 2px solid #ff4800d7; 
+    background-color: #353535;
+    color: #c85454;
+    padding: 15px 40px;
+    cursor: pointer;
+    margin:auto 20px auto 0px;
+    text-align: center;
+    position: relative;
+}
+
+.sessionDetails{
+    color:white;
+    display:flex;
+    justify-content:center;
+}
+
+.details-block1 h3, .details-block2 h3 {
+    padding: 5px 150px;
+}
+
+ul, li{
+    list-style-type: none;
+}
+
+nav{
+    align-items:center;
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Inheritance React Demo</title>
+
+  <!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+  <script crossorigin="anonymous" src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin="anonymous" src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this in production. It does a slow runtime code transformation -->
+  <script crossorigin="anonymous" src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+
+<body>
+
+  <div id="root">
+  </div>
+
+  <script type="text/babel">
+
+    class Person {
+      constructor () {
+        this.canTalk = true
+        this.name = ''
+      }
+
+      greet () {
+        if (this.canTalk) {
+          return `Hi, I am ${this.name}`
+        }
+      }
+    }
+
+  
+    class Employee extends Person{
+      constructor (newName, newTitle) {
+        super()
+        this.name = newName
+        this.title = newTitle
+      }
+      
+      greet () {
+        let who = super.greet()
+        let what = this.title
+        return `${who}, the ${what}.`
+      }
+    }
+
+
+    class Customer extends Person {
+      constructor (newName){
+        super()
+        this.name = newName
+      }
+    }
+
+
+    class Mime extends Person {
+      constructor (newName) {
+        super()
+        this.name = newName
+        this.canTalk = false
+      }
+    }
+
+
+    class List extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {people: [
+                        new Employee('Bob', 'Builder'),
+                        new Customer('Joe'),
+                        new Employee('Red Green', 'Handyman'),
+                        new Mime('Mime'),
+                        new Customer('Mike')
+                     ]}
+      }
+      
+      render() {
+        const listItems = this.state.people.map((e) => (
+                <li key={Math.random().toString()}>
+                  {e.greet()}
+                </li>
+        ))
+        
+        return (
+          <ul>
+            {listItems}
+          </ul>
+        )
+      }
+    }
+    
+    const element = <List />        
+    
+    ReactDOM.render(
+      element,
+      document.getElementById('root')
+    )
+  </script>
+</body>
+
+</html>

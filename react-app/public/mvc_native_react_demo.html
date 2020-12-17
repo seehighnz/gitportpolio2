@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>React app demo</title>
+
+  <!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+  <script crossorigin="anonymous" src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin="anonymous" src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this in production. It does a slow runtime code transformation -->
+  <script crossorigin="anonymous" src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</head>
+
+<body>
+
+  <div id="app">
+  </div>
+
+  <!-- View is the part above -->
+
+  <script type="text/babel">
+    // Model
+    class Calculator {
+      constructor() {
+        this.clear()
+      }
+
+      add(x) {
+        this.result += x
+      }
+
+      clear() {
+        this.result = 0
+      }
+
+      getResult() {
+        return this.result
+      }
+    }
+
+
+    // Controller
+    class Controller {
+      constructor(model) {
+        this.model = model
+      }
+
+      sum(min, max, step) {   
+        min = Number(min)
+        max = Number(max)
+        step = Number(step)     
+        for(let value = min; value <= max; value += step) {//min1, step을 더한다, 그리고 만약 max 보다 작으면 keep going.
+          this.model.add(value)
+        }
+        return this.model.getResult()
+      }
+
+      clear() {
+        this.model.clear()
+      }
+    }
+    
+
+    // View
+    class CalculatorView extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = { result: undefined }
+        
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleClick = this.handleClick.bind(this)
+      }
+
+      handleSubmit(e) {  
+        e.preventDefault()
+        
+        let min = document.getElementById("min").value
+        let max = document.getElementById("max").value
+        let step = document.getElementById("step").value
+        if (min !== '' && max !== '' && step !== '') {
+          this.setState({ result: this.props.ctr.sum(Number(min), Number(max), Number(step)) })
+        }
+      }
+
+      handleClick() {
+        this.props.ctr.clear()
+        document.getElementById("min").value = ""
+        document.getElementById("max").value = ""
+        document.getElementById("step").value = ""
+        this.setState({ result: undefined })
+      }
+
+      render() {
+        return (
+          <div>
+            <h1>Input</h1>
+            <form onSubmit={this.handleSubmit}>
+              <label>weight: </label>
+              <input type="number" id="weight" />
+              <br /><br />
+              <label>Distance: </label>
+              <input type="number" id="Distance" />
+              <br /><br />
+              <button type="submit">START</button>
+              <button type="submit">PAUSE</button>  
+              <button onClick={this.handleClick}>RESET</button>               
+            </form>
+            <button onClick={this.handleClick}>Clear</button>
+            <div hidden={this.state.result === undefined}>
+              <h1>Result</h1>
+              <p>{this.state.result}</p>
+            </div>
+          </div>
+        )
+      }
+    }
+
+
+    // main function - starting point of this web app
+    var calculator = undefined, controller = undefined
+    
+    let main = () => {
+      calculator = new Calculator() //object for model
+      controller = new Controller(calculator) //object for view
+
+      const element = <CalculatorView ctr={controller} />
+      ReactDOM.render(
+        element,
+        document.getElementById('app')
+      )
+    }
+
+    window.onload = main
+  </script>
+
+</body>
+
+</html>
